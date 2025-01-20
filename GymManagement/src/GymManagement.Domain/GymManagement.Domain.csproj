@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Rootnamespace>GymManagement.Domain</Rootnamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.SmartEnum" />
+    <PackageReference Include="ErrorOr" />
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="Throw" />
+  </ItemGroup>
+
+</Project>

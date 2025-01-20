@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Rootnamespace>GymManagement.Application</Rootnamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SharedKernel\SharedKernel\SharedKernel.csproj" />
+    <ProjectReference Include="..\GymManagement.Domain\GymManagement.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

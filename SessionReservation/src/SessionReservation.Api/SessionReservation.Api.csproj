@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <RootNamespace>SessionReservation.Api</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SessionReservation.Application\SessionReservation.Application.csproj" />
+    <ProjectReference Include="..\SessionReservation.Contracts\SessionReservation.Contracts.csproj" />
+    <ProjectReference Include="..\SessionReservation.Domain\SessionReservation.Domain.csproj" />
+    <ProjectReference Include="..\SessionReservation.Infrastructure\SessionReservation.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
