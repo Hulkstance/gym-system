@@ -123,6 +123,79 @@ Invariants are simply business rules. Things in our system that must always be t
 **Participant Invariants**
 - A participant cannot reserve overlapping sessions
 
+## Anemic Domain Model vs. Rich Domain Model
+
+In this project, the entities follow the **Rich Domain Model** concept, which comes from Domain-Driven Design.
+
+This concept allows us to implement business rules within the entities, in one place. This avoids spreading business rules throughout the codebase in different classes, making the code more manageable.
+
+You can follow the **Domain-Driven Design** principle for your domain entities or use **anemic entities** with plain `get` and `set` properties.
+
+### Anemic Domain Model
+
+```csharp
+public class Order
+{
+    public Guid Id { get; set; }
+    public string OrderNumber { get; set; }
+    public Guid CustomerId { get; set; }
+    public Customer Customer { get; set; }
+    public DateTime Date { get; set; }
+    public List<OrderItem> Items { get; set; } = [];
+}
+```
+
+### Rich Domain Model
+
+```csharp
+public class Order
+{
+    public Guid Id { get; private set; }
+    public string OrderNumber { get; private set; }
+    public Guid CustomerId { get; private set; }
+    public Customer Customer { get; private set; }
+    public DateTime Date { get; private set; }
+    public ShipmentStatus OrderStatus { get; private set; }
+
+    public IReadOnlyList<OrderItem> Items => _items.AsReadOnly();
+
+    private readonly List<OrderItem> _items = new();
+
+    private Order() { }
+
+    public static Order Create(string orderNumber, Customer customer, List<OrderItem> items)
+    {
+        return new Order
+        {
+            Id = Guid.NewGuid(),
+            OrderNumber = orderNumber,
+            Customer = customer,
+            CustomerId = customer.Id,
+            Date = DateTime.UtcNow
+        }.AddItems(items);
+    }
+
+    private Order AddItems(List<OrderItem> items)
+    {
+        _items.AddRange(items);
+        return this;
+    }
+
+    public ErrorOr<Success> Process()
+    {
+        if (Status is not OrderStatus.Created)
+        {
+            return Error.Validation("Can only update to Processing from Created status");
+        }
+
+        Status = OrderStatus.Processing;
+        Date = DateTime.UtcNow;
+
+        return Result.Success;
+    }
+}
+```
+
 ## References
 
 - [Strategic Design](https://learn.microsoft.com/en-us/azure/architecture/microservices/model/domain-analysis#introduction)
